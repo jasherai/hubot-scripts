@@ -12,7 +12,7 @@ env = process.env
 # % heroku config:add HUBOT_ERRBIT_AUTH_TOKEN="..."
 # % heroku config:add HUBOT_ERRBIT_URL="..."
 # Example error and further API :
-# http://help.errbit.io/kb/api-2/api-overview
+# http://help.airbrake.io/kb/api-2/api-overview
 
 module.exports = (robot) ->
 
