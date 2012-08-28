@@ -27,7 +27,8 @@ module.exports = (robot) ->
     accountId = process.env.HUBOT_NEWRELIC_ACCOUNT_ID
     appId     = process.env.HUBOT_NEWRELIC_APP_ID
     apiKey    = process.env.HUBOT_NEWRELIC_API_KEY
-    Parser = require("xml2js").Parser
+    xml2js = require("xml2js")
+    parser = new xml2js.Parser(xml2js.defaults["0.1"])
     
     msg.http("https://rpm.newrelic.com/accounts/#{accountId}/applications/#{appId}/threshold_values.xml?api_key=#{apiKey}")
       .get() (err, res, body) ->
@@ -35,7 +36,7 @@ module.exports = (robot) ->
           msg.send "New Relic says: #{err}"
           return
 
-        (new Parser).parseString body, (err, json)->
+        parser.parseString body, (err, json)->
           threshold_values = json['threshold_value'] || []
           lines = threshold_values.map (threshold_value) ->
             "#{threshold_value['@']['name']}: #{threshold_value['@']['formatted_metric_value']}"
